@@ -1,0 +1,52 @@
+{
+  "name": "uaj-admin-console",
+  "version": "1.0.0",
+  "description": "Standalone Cross-Platform Admin Console for UAJ Web Tech (Windows .exe & Android .apk)",
+  "main": "electron/main.cjs",
+  "author": "UAJ Web Tech",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "electron electron/main.cjs",
+    "electron:dev": "vite build && electron electron/main.cjs",
+    "build:exe": "vite build && electron-builder --win --dir -c.win.sign=null",
+    "build:exe:quick": "vite build && electron-builder --win --dir -c.win.sign=null",
+    "cap:add:android": "cap add android",
+    "cap:sync": "cap sync android",
+    "cap:open:android": "cap open android",
+    "build:apk": "vite build && cap sync android && cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
+    "lucide-react": "^0.546.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.7.2",
+    "vite": "^6.2.0"
+  },
+  "build": {
+    "appId": "com.uajwebtech.admin",
+    "productName": "UAJ Admin Console",
+    "forceCodeSigning": false,
+    "directories": {
+      "output": "dist-electron"
+    },
+    "win": {
+      "target": "dir",
+      "sign": null
+    }
+  }
+}

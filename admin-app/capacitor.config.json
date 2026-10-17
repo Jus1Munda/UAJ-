@@ -1,0 +1,13 @@
+{
+  "appId": "com.uajwebtech.admin",
+  "appName": "UAJ Admin",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#05040a",
+    "allowMixedContent": true
+  }
+}
