@@ -14,9 +14,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+// AI Studio runtime requires dev server to run strictly on port 3000.
+// Do not use process.env.PORT (which is set to 8080 for the Nginx proxy).
+const PORT = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Enable CORS and OPTIONS handling
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 import { formatTelegramNotification, formatIndianStandardTime } from './src/utils/telegramFormat.ts';
 
@@ -26,7 +40,7 @@ import { formatTelegramNotification, formatIndianStandardTime } from './src/util
 let cachedChatId: string | number | null = null;
 
 // Temporary, secure server-side diagnostic endpoint to detect group chat ID via getUpdates
-app.get('/api/telegram-status', async (req, res) => {
+app.get(['/api/telegram-status', '/api/telegram-status/'], async (req, res) => {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const envChatId = process.env.TELEGRAM_CHAT_ID;
 
@@ -144,8 +158,18 @@ app.get('/api/telegram-status', async (req, res) => {
   }
 });
 
+// GET status for inquiry endpoint
+app.get(['/api/inquiries', '/api/inquiries/'], (req, res) => {
+  res.json({
+    status: 'online',
+    endpoint: '/api/inquiries',
+    method: 'POST',
+    description: 'UAJ Web Tech Project Brief submission endpoint'
+  });
+});
+
 // Endpoint to receive project inquiries and dispatch them to Telegram
-app.post('/api/inquiries', async (req, res) => {
+app.post(['/api/inquiries', '/api/inquiries/'], async (req, res) => {
   try {
     const { name, email, business, projectType, budget, timeline, details } = req.body;
 
