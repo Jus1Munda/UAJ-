@@ -4,9 +4,10 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { X, Zap, CheckCircle2, Shield } from 'lucide-react';
+import { X, Zap, CheckCircle2, Calculator, AlertTriangle, Send } from 'lucide-react';
 import { UAJLogo } from './UAJLogo';
 import { saveInquiry } from '../utils/inquiryStorage';
+import { getStartingPrice, CAPABILITY_PRICE_MAP } from '../utils/pricing';
 
 interface ProjectModalProps {
   isOpen: boolean;
@@ -21,53 +22,101 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 }) => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     business: '',
-    projectType: initialService,
-    budget: '$5,000 - $15,000',
+    projectType: initialService || 'Website Design & Development',
     timeline: '1 - 2 Months',
     details: ''
   });
 
   useEffect(() => {
     if (initialService) {
-      setFormData((prev) => ({ ...prev, projectType: initialService }));
+      // Find matching standard capability if passed
+      let matched = initialService;
+      for (const cap of Object.keys(CAPABILITY_PRICE_MAP)) {
+        if (initialService.toLowerCase().includes(cap.toLowerCase())) {
+          matched = cap;
+          break;
+        }
+      }
+      setFormData((prev) => ({ ...prev, projectType: matched }));
     }
   }, [initialService]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const currentEstimatedBudget = getStartingPrice(formData.projectType);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmissionError(null);
 
-    // Save persistently to storage
-    setTimeout(() => {
+    const calculatedBudget = getStartingPrice(formData.projectType);
+
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      business: formData.business.trim() || undefined,
+      projectType: formData.projectType || 'Website Design & Development',
+      budget: calculatedBudget,
+      timeline: formData.timeline,
+      details: formData.details.trim()
+    };
+
+    try {
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.success) {
+        // Do not falsely report success if Telegram delivery fails
+        const errorMsg = data.error || `Inquiry could not be dispatched (HTTP ${response.status}).`;
+        setSubmissionError(errorMsg);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Persistently record locally in studio registry as well
       saveInquiry({
-        name: formData.name,
-        email: formData.email,
-        business: formData.business || undefined,
-        projectType: formData.projectType,
-        budget: formData.budget,
-        timeline: formData.timeline,
-        details: formData.details
+        name: payload.name,
+        email: payload.email,
+        business: payload.business,
+        projectType: payload.projectType,
+        budget: payload.budget,
+        timeline: payload.timeline,
+        details: payload.details
       });
 
       setIsSubmitting(false);
       setSubmitted(true);
-    }, 400);
+    } catch (err: any) {
+      console.error('Inquiry transmission failed:', err);
+      setSubmissionError(
+        err.message || 'Network error: Failed to reach the server. Please check your connection and try again.'
+      );
+      setIsSubmitting(false);
+    }
   };
 
   const handleResetAndClose = () => {
     setSubmitted(false);
+    setSubmissionError(null);
     setFormData({
       name: '',
       email: '',
       business: '',
       projectType: 'Website Design & Development',
-      budget: '$5,000 - $15,000',
       timeline: '1 - 2 Months',
       details: ''
     });
@@ -105,16 +154,22 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
             >
               PROJECT INQUIRY RECORDED
             </h3>
-            <p className="text-slate-300 text-sm max-w-sm mx-auto mb-6 leading-relaxed">
-              Your inquiry has been stored securely in our system. A studio creative lead will review your requirements and reach out within 24 hours.
+            <p className="text-slate-300 text-sm max-w-sm mx-auto mb-4 leading-relaxed">
+              Your inquiry has been stored securely and dispatched directly to the studio Telegram group via @UAJNotifyBot.
             </p>
-            <button
-              onClick={handleResetAndClose}
-              className="px-6 py-2.5 rounded-lg bg-[#00f2fe] text-black font-bold text-sm tracking-wide uppercase hover:bg-[#38bdf8] transition-colors cursor-pointer shadow-md"
-              style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
-            >
-              Return to Studio
-            </button>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00f2fe]/10 border border-[#00f2fe]/30 text-[#00f2fe] text-xs font-mono mb-6">
+              <Send className="w-3 h-3" />
+              <span>Delivered to UAJ Telegram Channel</span>
+            </div>
+            <div>
+              <button
+                onClick={handleResetAndClose}
+                className="px-6 py-2.5 rounded-lg bg-[#00f2fe] text-black font-bold text-sm tracking-wide uppercase hover:bg-[#38bdf8] transition-colors cursor-pointer shadow-md"
+                style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
+              >
+                Return to Studio
+              </button>
+            </div>
           </div>
         ) : (
           <div>
@@ -130,7 +185,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 >
                   START A PROJECT
                 </h3>
-                <span className="text-xs text-[#a78bfa] font-mono">UAJ Web Tech · Project Briefing</span>
+                <span className="text-xs text-[#a78bfa] font-mono">UAJ Web Tech · Telegram Connected</span>
               </div>
             </div>
 
@@ -178,16 +233,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 />
               </div>
 
+              {/* Capability Selection & Read-only Auto-Filled Estimated Budget */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-mono text-slate-300 mb-1 uppercase font-semibold">
-                    Project Capability
+                    Project Capability *
                   </label>
                   <select
+                    required
                     value={formData.projectType}
                     onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-[#140e2b] border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-[#00f2fe] transition-colors"
+                    className="w-full px-3 py-2 rounded-lg bg-[#140e2b] border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-[#00f2fe] transition-colors cursor-pointer"
                   >
+                    <option value="">-- Select a capability --</option>
                     <option value="Website Design & Development">Website Design & Development</option>
                     <option value="UI/UX Design">UI/UX Design</option>
                     <option value="Landing Pages">Landing Pages</option>
@@ -198,19 +256,28 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1 uppercase font-semibold">
-                    Estimated Budget
-                  </label>
-                  <select
-                    value={formData.budget}
-                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-[#140e2b] border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-[#00f2fe] transition-colors"
-                  >
-                    <option value="Under $5,000">Under $5,000</option>
-                    <option value="$5,000 - $15,000">$5,000 - $15,000</option>
-                    <option value="$15,000 - $30,000">$15,000 - $30,000</option>
-                    <option value="$30,000+">$30,000+</option>
-                  </select>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-mono text-slate-300 uppercase font-semibold">
+                      Estimated Budget
+                    </label>
+                    <span className="text-[10px] font-mono text-[#00f2fe] uppercase tracking-wider flex items-center gap-1">
+                      <Calculator className="w-3 h-3" />
+                      <span>Auto-filled</span>
+                    </span>
+                  </div>
+                  {/* Read-Only Auto-Filled Display Box */}
+                  <div className="relative">
+                    <input
+                      type="text"
+                      readOnly
+                      tabIndex={-1}
+                      aria-readonly="true"
+                      value={currentEstimatedBudget}
+                      className="w-full px-3.5 py-2 rounded-lg bg-[#0e091e] border border-[#00f2fe]/40 text-[#00f2fe] font-bold text-xs sm:text-sm cursor-not-allowed select-none focus:outline-none shadow-[inset_0_1px_3px_rgba(0,0,0,0.6)]"
+                      style={{ fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif' }}
+                      title="Estimated budget is automatically calculated based on selected capability"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -244,6 +311,17 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 />
               </div>
 
+              {/* Telegram Delivery Error Banner */}
+              {submissionError && (
+                <div className="p-3.5 rounded-lg bg-rose-950/40 border border-rose-500/50 text-rose-200 text-xs flex items-start gap-2.5 animate-in fade-in">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-rose-300">Telegram Notification Status</p>
+                    <p className="mt-0.5 leading-relaxed text-slate-300 text-[11px]">{submissionError}</p>
+                  </div>
+                </div>
+              )}
+
               <div className="pt-2">
                 <button
                   type="submit"
@@ -252,7 +330,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                   style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
                 >
                   <Zap className="w-4 h-4 fill-black" />
-                  <span>{isSubmitting ? 'Recording Inquiry...' : 'Submit Project Brief'}</span>
+                  <span>{isSubmitting ? 'Sending to Telegram...' : 'Submit Project Brief'}</span>
                 </button>
               </div>
             </form>
