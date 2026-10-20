@@ -1,0 +1,4 @@
+/api/inquiries        /.netlify/functions/inquiries        200!
+/api/inquiries/*      /.netlify/functions/inquiries        200!
+/api/telegram-status  /.netlify/functions/telegram-status  200!
+/*                    /index.html                          200

@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 });
 
 import { formatTelegramNotification, formatIndianStandardTime } from './src/utils/telegramFormat.ts';
+import { dispatchTelegramInquiry } from './src/utils/telegramService.ts';
 
 // Helper to escape HTML characters for Telegram HTML parse mode (re-exported or handled in utility)
 
@@ -171,74 +172,8 @@ app.get(['/api/inquiries', '/api/inquiries/'], (req, res) => {
 // Endpoint to receive project inquiries and dispatch them to Telegram
 app.post(['/api/inquiries', '/api/inquiries/'], async (req, res) => {
   try {
-    const { name, email, business, projectType, budget, timeline, details } = req.body;
-
-    // Validate essential inputs
-    if (!name || typeof name !== 'string' || !name.trim()) {
-      return res.status(400).json({ success: false, error: 'Client name is required.' });
-    }
-    if (!email || typeof email !== 'string' || !email.trim()) {
-      return res.status(400).json({ success: false, error: 'Email address is required.' });
-    }
-    if (!details || typeof details !== 'string' || !details.trim()) {
-      return res.status(400).json({ success: false, error: 'Project description is required.' });
-    }
-
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID || cachedChatId || '-5241301089';
-
-    // Verify Telegram server configuration
-    if (!botToken || !chatId) {
-      console.warn('[Telegram Integration] Missing credentials: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set.');
-      return res.status(503).json({
-        success: false,
-        error: 'Telegram delivery is not configured on the server. Please ensure TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID environment variables are set.'
-      });
-    }
-
-    // Format notification strictly as required
-    const telegramMessage = formatTelegramNotification({
-      name,
-      email,
-      business,
-      projectType,
-      budget,
-      timeline,
-      details
-    });
-
-    // Dispatch message to Telegram Bot API
-    const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-    const response = await fetch(telegramApiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: telegramMessage,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true
-      })
-    });
-
-    const result = await response.json();
-
-    if (!response.ok || !result.ok) {
-      console.error('[Telegram Integration] Telegram API returned error:', result);
-      return res.status(502).json({
-        success: false,
-        error: `Telegram delivery failed: ${result.description || 'Unknown Telegram error'}`
-      });
-    }
-
-    // Success response
-    return res.status(200).json({
-      success: true,
-      messageId: result.result?.message_id,
-      timestamp: formatIndianStandardTime(new Date()),
-      isoTimestamp: new Date().toISOString()
-    });
+    const result = await dispatchTelegramInquiry(req.body);
+    return res.status(result.statusCode).json(result);
   } catch (error: any) {
     console.error('[Telegram Integration] Internal error:', error);
     return res.status(500).json({
