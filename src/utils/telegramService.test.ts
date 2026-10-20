@@ -51,12 +51,27 @@ test('dispatchTelegramInquiry returns 503 when TELEGRAM_BOT_TOKEN is not set', a
       email: 'aarav@example.com',
       details: 'Full stack web build'
     },
-    { TELEGRAM_BOT_TOKEN: '' } // Simulating unconfigured env
+    { TELEGRAM_BOT_TOKEN: '', TELEGRAM_CHAT_ID: 'mock_chat_id' }
   );
 
   assert.equal(result.success, false);
   assert.equal(result.statusCode, 503);
-  assert.ok(result.error?.includes('Telegram delivery is not configured'));
+  assert.ok(result.error?.includes('TELEGRAM_BOT_TOKEN'));
+});
+
+test('dispatchTelegramInquiry returns 503 when TELEGRAM_CHAT_ID is not set', async () => {
+  const result = await dispatchTelegramInquiry(
+    {
+      name: 'Aarav Sharma',
+      email: 'aarav@example.com',
+      details: 'Full stack web build'
+    },
+    { TELEGRAM_BOT_TOKEN: 'mock_token', TELEGRAM_CHAT_ID: '' }
+  );
+
+  assert.equal(result.success, false);
+  assert.equal(result.statusCode, 503);
+  assert.ok(result.error?.includes('TELEGRAM_CHAT_ID'));
 });
 
 test('Netlify inquiriesHandler handles OPTIONS CORS preflight with 204', async () => {

@@ -4,5 +4,13 @@ dist/
 coverage/
 .DS_Store
 *.log
+
+# Environment variables & secrets (keep excluded from Git)
+.env
+.env.local
+.env.*.local
 .env*
 !.env.example
+
+# Netlify local files
+.netlify/

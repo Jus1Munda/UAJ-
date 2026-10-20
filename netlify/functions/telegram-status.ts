@@ -31,12 +31,12 @@ export const handler: Handler = async (event: HandlerEvent, _context: HandlerCon
       runtime: 'netlify-serverless-function',
       botTokenConfigured: Boolean(botToken && botToken.trim()),
       chatIdConfigured: Boolean(envChatId && envChatId.trim()),
-      detectedChatId: envChatId ? Number(envChatId) : -5241301089,
+      detectedChatId: envChatId ? Number(envChatId) : null,
       chatTitle: 'UAJ',
       chatType: 'group',
-      message: botToken
+      message: botToken && envChatId
         ? 'Telegram bot configuration active on Netlify.'
-        : 'TELEGRAM_BOT_TOKEN environment variable not set in Netlify site settings.'
+        : 'TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID environment variable not set in Netlify site settings.'
     })
   };
 };

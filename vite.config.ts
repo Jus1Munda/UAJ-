@@ -25,7 +25,7 @@ function telegramApiPlugin(): Plugin {
             JSON.stringify({
               botTokenConfigured: Boolean(botToken),
               chatIdConfigured: Boolean(chatId),
-              detectedChatId: chatId ? Number(chatId) : -5241301089,
+              detectedChatId: chatId ? Number(chatId) : null,
               chatTitle: 'UAJ',
               chatType: 'group',
               message: 'Telegram API endpoint operational.'

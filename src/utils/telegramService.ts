@@ -53,7 +53,7 @@ export async function dispatchTelegramInquiry(
   }
 
   const botToken = env.TELEGRAM_BOT_TOKEN;
-  const chatId = env.TELEGRAM_CHAT_ID || '-5241301089';
+  const chatId = env.TELEGRAM_CHAT_ID;
 
   if (!botToken || !botToken.trim()) {
     console.warn('[Telegram Service] Missing TELEGRAM_BOT_TOKEN environment variable.');
@@ -62,6 +62,16 @@ export async function dispatchTelegramInquiry(
       statusCode: 503,
       error:
         'Telegram delivery is not configured on the server. Please ensure TELEGRAM_BOT_TOKEN environment variable is set in Netlify site settings.'
+    };
+  }
+
+  if (!chatId || !chatId.trim()) {
+    console.warn('[Telegram Service] Missing TELEGRAM_CHAT_ID environment variable.');
+    return {
+      success: false,
+      statusCode: 503,
+      error:
+        'Telegram delivery is not configured on the server. Please ensure TELEGRAM_CHAT_ID environment variable is set in Netlify site settings.'
     };
   }
 
