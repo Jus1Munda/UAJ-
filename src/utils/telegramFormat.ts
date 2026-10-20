@@ -12,6 +12,7 @@ export interface InquiryTelegramPayload {
   timeline?: string;
   details: string;
   submittedAt?: string;
+  requestType?: string;
 }
 
 /**
@@ -62,6 +63,22 @@ export function formatTelegramNotification(data: InquiryTelegramPayload): string
 
   // Use the provided date or current date, formatted in Asia/Kolkata IST
   const timestamp = data.submittedAt || formatIndianStandardTime(new Date());
+
+  if (data.requestType === 'private_portfolio_request') {
+    return [
+      `🔒 <b>Private Portfolio Access Request — UAJ WEB TECH</b>`,
+      ``,
+      `👤 <b>Visitor Name:</b> ${safeName}`,
+      `📧 <b>Contact Email:</b> ${safeEmail}`,
+      `🏢 <b>Company / Org:</b> ${safeBusiness}`,
+      `🏷 <b>Request Type:</b> <code>private_portfolio_request</code>`,
+      ``,
+      `📝 <b>Reason for Access:</b>`,
+      safeDetails,
+      ``,
+      `📅 <i>Submitted at: ${timestamp} · Portfolio Access Form</i>`
+    ].join('\n');
+  }
 
   return [
     `⚡ <b>New Client Inquiry — UAJ WEB TECH</b>`,

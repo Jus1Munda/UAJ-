@@ -44,6 +44,19 @@ test('dispatchTelegramInquiry rejects missing details with 400', async () => {
   assert.ok(result.error?.includes('Project description is required'));
 });
 
+test('dispatchTelegramInquiry rejects missing reason for private_portfolio_request with 400', async () => {
+  const result = await dispatchTelegramInquiry({
+    requestType: 'private_portfolio_request',
+    name: 'Aarav Sharma',
+    email: 'aarav@example.com',
+    reason: '   '
+  });
+
+  assert.equal(result.success, false);
+  assert.equal(result.statusCode, 400);
+  assert.ok(result.error?.includes('Reason for requesting access is required'));
+});
+
 test('dispatchTelegramInquiry returns 503 when TELEGRAM_BOT_TOKEN is not set', async () => {
   const result = await dispatchTelegramInquiry(
     {

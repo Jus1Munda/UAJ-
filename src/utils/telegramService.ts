@@ -9,10 +9,13 @@ export interface DispatchInquiryInput {
   name?: unknown;
   email?: unknown;
   business?: unknown;
+  company?: unknown;
   projectType?: unknown;
   budget?: unknown;
   timeline?: unknown;
   details?: unknown;
+  reason?: unknown;
+  requestType?: unknown;
 }
 
 export interface DispatchInquiryResult {
@@ -33,13 +36,45 @@ export async function dispatchTelegramInquiry(
   input: DispatchInquiryInput,
   env: Record<string, string | undefined> = process.env
 ): Promise<DispatchInquiryResult> {
+  const requestType = typeof input.requestType === 'string' ? input.requestType.trim() : undefined;
   const name = typeof input.name === 'string' ? input.name.trim() : '';
   const email = typeof input.email === 'string' ? input.email.trim() : '';
-  const details = typeof input.details === 'string' ? input.details.trim() : '';
-  const business = typeof input.business === 'string' ? input.business.trim() : undefined;
-  const projectType = typeof input.projectType === 'string' ? input.projectType.trim() : undefined;
-  const budget = typeof input.budget === 'string' ? input.budget.trim() : undefined;
-  const timeline = typeof input.timeline === 'string' ? input.timeline.trim() : undefined;
+  const rawDetails =
+    typeof input.details === 'string' && input.details.trim()
+      ? input.details.trim()
+      : typeof input.reason === 'string' && input.reason.trim()
+        ? input.reason.trim()
+        : '';
+  const details = rawDetails;
+
+  const rawBusiness =
+    typeof input.business === 'string' && input.business.trim()
+      ? input.business.trim()
+      : typeof input.company === 'string' && input.company.trim()
+        ? input.company.trim()
+        : undefined;
+  const business = rawBusiness;
+
+  const projectType =
+    typeof input.projectType === 'string' && input.projectType.trim()
+      ? input.projectType.trim()
+      : requestType === 'private_portfolio_request'
+        ? 'Private Portfolio Access'
+        : undefined;
+
+  const budget =
+    typeof input.budget === 'string' && input.budget.trim()
+      ? input.budget.trim()
+      : requestType === 'private_portfolio_request'
+        ? 'Portfolio Access Request'
+        : undefined;
+
+  const timeline =
+    typeof input.timeline === 'string' && input.timeline.trim()
+      ? input.timeline.trim()
+      : requestType === 'private_portfolio_request'
+        ? 'Immediate'
+        : undefined;
 
   // Validation
   if (!name) {
@@ -49,7 +84,14 @@ export async function dispatchTelegramInquiry(
     return { success: false, statusCode: 400, error: 'Email address is required.' };
   }
   if (!details) {
-    return { success: false, statusCode: 400, error: 'Project description is required.' };
+    return {
+      success: false,
+      statusCode: 400,
+      error:
+        requestType === 'private_portfolio_request'
+          ? 'Reason for requesting access is required.'
+          : 'Project description is required.'
+    };
   }
 
   const botToken = env.TELEGRAM_BOT_TOKEN;
@@ -83,7 +125,8 @@ export async function dispatchTelegramInquiry(
     projectType,
     budget,
     timeline,
-    details
+    details,
+    requestType
   });
 
   const telegramApiUrl = `https://api.telegram.org/bot${botToken.trim()}/sendMessage`;

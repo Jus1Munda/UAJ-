@@ -57,3 +57,23 @@ test('formatTelegramNotification automatically generates IST timestamp when subm
   assert.ok(result.includes('IST · Web Studio Form'));
   assert.ok(!result.includes('UTC · Web Studio Form'));
 });
+
+test('formatTelegramNotification formats private_portfolio_request with dedicated heading and fields', () => {
+  const result = formatTelegramNotification({
+    name: 'Elena Rostova',
+    email: 'elena@vanguard.tech',
+    business: 'Vanguard Systems',
+    details: 'Interested in evaluating enterprise case studies for an upcoming fintech architecture redesign.',
+    requestType: 'private_portfolio_request',
+    submittedAt: 'Oct 20, 2026, 11:15 AM IST'
+  });
+
+  assert.ok(result.includes('Private Portfolio Access Request — UAJ WEB TECH'));
+  assert.ok(result.includes('Elena Rostova'));
+  assert.ok(result.includes('elena@vanguard.tech'));
+  assert.ok(result.includes('Vanguard Systems'));
+  assert.ok(result.includes('<code>private_portfolio_request</code>'));
+  assert.ok(result.includes('Reason for Access:'));
+  assert.ok(result.includes('Interested in evaluating enterprise case studies'));
+  assert.ok(result.includes('Oct 20, 2026, 11:15 AM IST · Portfolio Access Form'));
+});

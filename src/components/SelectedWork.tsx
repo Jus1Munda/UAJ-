@@ -3,14 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import { Layers, ArrowRight, Sparkles, Clock, Zap } from 'lucide-react';
+import React, { useState } from 'react';
+import { Clock, Zap, ArrowRight } from 'lucide-react';
+import { PrivatePortfolioModal } from './PrivatePortfolioModal';
 
 interface SelectedWorkProps {
-  onInquireProject: (projectName: string) => void;
+  onInquireProject?: (projectName: string) => void;
 }
 
-export const SelectedWork: React.FC<SelectedWorkProps> = ({ onInquireProject }) => {
+export const SelectedWork: React.FC<SelectedWorkProps> = () => {
+  const [isPrivateModalOpen, setIsPrivateModalOpen] = useState(false);
+
   return (
     <section id="work" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl mx-auto scroll-mt-20">
       {/* Section Header */}
@@ -65,7 +68,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onInquireProject }) 
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button
-              onClick={() => onInquireProject('Private Portfolio Request')}
+              onClick={() => setIsPrivateModalOpen(true)}
               className="px-6 py-3 rounded-lg bg-[#00f2fe] hover:bg-[#38bdf8] text-black font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[0_0_20px_rgba(0,242,254,0.3)]"
               style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
             >
@@ -76,6 +79,12 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onInquireProject }) 
           </div>
         </div>
       </div>
+
+      {/* Dedicated Private Portfolio Access Modal */}
+      <PrivatePortfolioModal
+        isOpen={isPrivateModalOpen}
+        onClose={() => setIsPrivateModalOpen(false)}
+      />
     </section>
   );
 };
