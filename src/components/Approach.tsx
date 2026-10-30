@@ -62,7 +62,7 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-slate-800 pb-6">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-[#8b5cf6] block mb-1.5 font-semibold">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#fb7185] block mb-1.5 font-semibold">
             Studio Process
           </span>
           <h2
@@ -85,17 +85,17 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
           return (
             <div
               key={item.step}
-              className="p-6 rounded-xl bg-obsidian-card border border-slate-800/90 hover:border-[#8b5cf6]/60 transition-all duration-300 flex flex-col justify-between group"
+              className="p-6 rounded-xl bg-obsidian-card border border-slate-800/90 hover:border-[#a855f7]/60 transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span
-                    className="text-2xl font-extrabold text-[#00f2fe]/80 group-hover:text-[#00f2fe] transition-colors"
+                    className="text-2xl font-extrabold text-[#fb7185]/80 group-hover:text-[#fb7185] transition-colors"
                     style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
                   >
                     {item.step}
                   </span>
-                  <div className="w-9 h-9 rounded-lg bg-[#140f28] border border-[#8b5cf6]/30 flex items-center justify-center text-[#a78bfa] group-hover:text-[#00f2fe] transition-colors">
+                  <div className="w-9 h-9 rounded-lg bg-[#140f28] border border-[#a855f7]/30 flex items-center justify-center text-[#c084fc] group-hover:text-[#fb7185] transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
                 </div>
@@ -106,7 +106,7 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
                 >
                   {item.title}
                 </h3>
-                <span className="text-[11px] font-mono text-[#a78bfa] uppercase tracking-wider block mb-3">
+                <span className="text-[11px] font-mono text-[#c084fc] uppercase tracking-wider block mb-3">
                   {item.short}
                 </span>
 
@@ -114,7 +114,7 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
               </div>
 
               <div className="pt-3 border-t border-slate-800/80 text-[11px] font-mono text-slate-400">
-                <span className="text-[#38bdf8] font-semibold block mb-0.5">Outputs:</span>
+                <span className="text-[#fb7185] font-semibold block mb-0.5">Outputs:</span>
                 <span>{item.deliverables}</span>
               </div>
             </div>
@@ -123,9 +123,9 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
       </div>
 
       {/* Performance & Quality Benchmark Bar */}
-      <div className="p-6 sm:p-8 rounded-2xl bg-[#090714] border border-[#8b5cf6]/30 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div className="p-6 sm:p-8 rounded-2xl bg-[#090714] border border-[#a855f7]/30 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div className="lg:col-span-6">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#00f2fe] block mb-1">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#fb7185] block mb-1">
             Studio Performance Standards
           </span>
           <h3
@@ -141,11 +141,11 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
 
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs text-slate-300">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#00f2fe] shrink-0" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#fb7185] shrink-0" />
               <span>Mobile-first testing on modern iOS & Android viewports</span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-300">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#00f2fe] shrink-0" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#fb7185] shrink-0" />
               <span>Automated builds & regression testing on each release</span>
             </div>
           </div>
@@ -167,7 +167,7 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
               max="99"
               value={activeTier}
               onChange={(e) => setActiveTier(Number(e.target.value))}
-              className="w-full accent-[#00f2fe] bg-slate-800 h-2 rounded cursor-pointer"
+              className="w-full accent-[#fb7185] bg-slate-800 h-2 rounded cursor-pointer"
               aria-label="Speed tier slider"
             />
           </div>
@@ -179,7 +179,7 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
                 onClick={() => setActiveTier(preset.value)}
                 className={`px-2.5 py-1 rounded text-[11px] font-mono transition-colors cursor-pointer ${
                   activeTier === preset.value
-                    ? 'bg-[#00f2fe] text-black font-bold'
+                    ? 'bg-gradient-to-r from-[#f43f5e] to-[#a855f7] text-white font-bold'
                     : 'bg-[#18112e] text-slate-300 hover:text-white hover:bg-[#231842]'
                 }`}
               >
@@ -190,15 +190,15 @@ export const Approach: React.FC<ApproachProps> = ({ onOpenContact }) => {
 
           <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
             <span className="text-[11px] text-slate-400 font-mono">
-              Output: <strong className="text-[#38bdf8]">{currentRank.desc}</strong>
+              Output: <strong className="text-[#c084fc]">{currentRank.desc}</strong>
             </span>
             <button
               onClick={onOpenContact}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-black bg-[#00f2fe] hover:bg-[#38bdf8] transition-all flex items-center gap-1.5 cursor-pointer"
+              className="group relative inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold tracking-[0.14em] uppercase text-slate-100 bg-[#140e2b] hover:bg-[#1d123d] border border-[#a855f7]/40 hover:border-[#fb7185]/75 active:scale-[0.98] transition-all duration-200 cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.35)] hover:shadow-[0_0_15px_rgba(251,113,133,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#fb7185]/80"
               style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
             >
-              <Zap className="w-3.5 h-3.5 fill-black" />
-              <span>Discuss Your Project</span>
+              <Zap className="w-3.5 h-3.5 text-[#fb7185] group-hover:scale-110 transition-transform duration-200" />
+              <span className="group-hover:text-white transition-colors">Discuss Your Project</span>
             </button>
           </div>
         </div>

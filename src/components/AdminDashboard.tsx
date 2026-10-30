@@ -112,7 +112,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   const getStatusBadgeColor = (status: InquiryStatus) => {
     switch (status) {
       case 'New':
-        return 'bg-[#00f2fe]/20 text-[#00f2fe] border-[#00f2fe]/40';
+        return 'bg-[#f43f5e]/20 text-[#fb7185] border-[#fb7185]/40';
       case 'In Discussion':
         return 'bg-[#8b5cf6]/20 text-[#c4b5fd] border-[#8b5cf6]/40';
       case 'Approved':
@@ -132,8 +132,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   if (!isAuthenticated) {
     return (
       <div className="fixed inset-0 z-50 bg-[#05040a] flex items-center justify-center p-4">
-        <div className="w-full max-w-md p-8 rounded-2xl bg-[#0a0718] border border-[#8b5cf6]/30 shadow-[0_0_60px_rgba(139,92,246,0.2)] text-center">
-          <div className="w-12 h-12 rounded-xl bg-[#150e2d] border border-[#8b5cf6]/40 flex items-center justify-center mx-auto mb-4 text-[#00f2fe]">
+        <div className="w-full max-w-md p-8 rounded-2xl bg-[#0a0718] border border-[#a855f7]/30 shadow-[0_0_60px_rgba(168,85,247,0.2)] text-center">
+          <div className="w-12 h-12 rounded-xl bg-[#150e2d] border border-[#a855f7]/40 flex items-center justify-center mx-auto mb-4 text-[#fb7185]">
             <Lock className="w-6 h-6" />
           </div>
 
@@ -144,7 +144,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             STUDIO ADMIN PORTAL
           </h2>
           <p className="text-xs text-slate-400 mb-6 font-mono">
-            UAJ WEB TECH · Restricted Management Console
+            NuwayX Tech · Restricted Management Console
           </p>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -155,17 +155,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 placeholder="Enter admin passkey..."
                 value={passkeyInput}
                 onChange={(e) => setPasskeyInput(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg bg-[#140e2b] border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[#00f2fe] text-center tracking-widest font-mono"
+                className="w-full px-4 py-2.5 rounded-lg bg-[#140e2b] border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-[#fb7185] text-center tracking-widest font-mono"
               />
               {authError && <p className="text-rose-400 text-xs mt-2">{authError}</p>}
             </div>
 
             <button
               type="submit"
-              className="w-full py-2.5 rounded-lg bg-[#00f2fe] hover:bg-[#38bdf8] text-black font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md"
+              className="w-full py-2.5 rounded-lg bg-gradient-to-r from-[#f43f5e] to-[#a855f7] hover:from-[#fb7185] hover:to-[#c084fc] text-white font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md"
               style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
             >
-              <Unlock className="w-4 h-4 fill-black" />
+              <Unlock className="w-4 h-4 fill-white text-white" />
               <span>Authenticate Portal</span>
             </button>
 
@@ -175,7 +175,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 setPasskeyInput('admin2026');
                 setIsAuthenticated(true);
               }}
-              className="w-full text-[11px] text-[#a78bfa] hover:underline block pt-1"
+              className="w-full text-[11px] text-[#c084fc] hover:underline block pt-1"
             >
               [ Quick Access Demo Passkey: admin2026 ]
             </button>
@@ -211,7 +211,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 className="font-bold text-white text-base tracking-wider"
                 style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
               >
-                UAJ INQUIRY MANAGER
+                NuwayX Inquiry Manager
               </span>
               <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#8b5cf6]/20 text-[#c4b5fd] border border-[#8b5cf6]/40">
                 ADMIN SECURE

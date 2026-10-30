@@ -66,7 +66,7 @@ export function formatTelegramNotification(data: InquiryTelegramPayload): string
 
   if (data.requestType === 'private_portfolio_request') {
     return [
-      `🔒 <b>Private Portfolio Access Request — UAJ WEB TECH</b>`,
+      `🔒 <b>Private Portfolio Access Request — NuwayX Tech</b>`,
       ``,
       `👤 <b>Visitor Name:</b> ${safeName}`,
       `📧 <b>Contact Email:</b> ${safeEmail}`,
@@ -81,7 +81,7 @@ export function formatTelegramNotification(data: InquiryTelegramPayload): string
   }
 
   return [
-    `⚡ <b>New Client Inquiry — UAJ WEB TECH</b>`,
+    `⚡ <b>New Client Inquiry — NuwayX Tech</b>`,
     ``,
     `👤 <b>Client Name:</b> ${safeName}`,
     `📧 <b>Contact Email:</b> ${safeEmail}`,

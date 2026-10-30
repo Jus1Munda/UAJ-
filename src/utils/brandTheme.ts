@@ -94,8 +94,8 @@ export function generateManaSparks(count: number, seed: number = 42): ManaSpark[
  * Formats energy/performance index numbers for telemetry display in simple English.
  */
 export function formatSystemRank(rating: number): { rank: string; badge: string; color: string; desc: string } {
-  if (rating >= 95) return { rank: 'Elite Speed', badge: 'EX', color: '#00f2fe', desc: 'Instant page loads worldwide' };
-  if (rating >= 88) return { rank: 'S-Rank Speed', badge: 'S', color: '#38bdf8', desc: 'Under 1 second load times' };
-  if (rating >= 78) return { rank: 'Fast Speed', badge: 'A', color: '#8b5cf6', desc: 'Optimized for mobile & desktop' };
+  if (rating >= 95) return { rank: 'Elite Speed', badge: 'EX', color: '#fb7185', desc: 'Instant page loads worldwide' };
+  if (rating >= 88) return { rank: 'S-Rank Speed', badge: 'S', color: '#c084fc', desc: 'Under 1 second load times' };
+  if (rating >= 78) return { rank: 'Fast Speed', badge: 'A', color: '#a855f7', desc: 'Optimized for mobile & desktop' };
   return { rank: 'Standard Speed', badge: 'B', color: '#94a3b8', desc: 'Good baseline performance' };
 }

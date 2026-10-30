@@ -33,7 +33,7 @@ test('formatTelegramNotification formats heading and all client fields neatly in
     submittedAt: 'Oct 19, 2026, 9:56 AM IST'
   });
 
-  assert.ok(result.includes('New Client Inquiry — UAJ WEB TECH'));
+  assert.ok(result.includes('New Client Inquiry — NuwayX Tech'));
   assert.ok(result.includes('Siddharth Patel'));
   assert.ok(result.includes('sid@startup.io'));
   assert.ok(result.includes('Nexus AI Labs'));
@@ -53,7 +53,7 @@ test('formatTelegramNotification automatically generates IST timestamp when subm
   });
 
   assert.ok(result.includes('Not specified'));
-  assert.ok(result.includes('New Client Inquiry — UAJ WEB TECH'));
+  assert.ok(result.includes('New Client Inquiry — NuwayX Tech'));
   assert.ok(result.includes('IST · Web Studio Form'));
   assert.ok(!result.includes('UTC · Web Studio Form'));
 });
@@ -68,7 +68,7 @@ test('formatTelegramNotification formats private_portfolio_request with dedicate
     submittedAt: 'Oct 20, 2026, 11:15 AM IST'
   });
 
-  assert.ok(result.includes('Private Portfolio Access Request — UAJ WEB TECH'));
+  assert.ok(result.includes('Private Portfolio Access Request — NuwayX Tech'));
   assert.ok(result.includes('Elena Rostova'));
   assert.ok(result.includes('elena@vanguard.tech'));
   assert.ok(result.includes('Vanguard Systems'));

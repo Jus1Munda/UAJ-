@@ -8,8 +8,11 @@ export const CAPABILITY_PRICE_MAP: Record<string, string> = {
   'UI/UX Design': 'Starting at ₹4,999',
   'Landing Pages': 'Starting at ₹2,999',
   'Presentation Design': 'Starting at ₹1,999',
+  'Creative Design & Branding': 'Starting at ₹8,999',
   'Creative Digital Experiences': 'Starting at ₹8,999',
-  'Custom Interactive Solutions': 'Starting at ₹9,999'
+  'YouTube & Creator Services': 'Starting at ₹2,999',
+  'Custom Interactive Solutions': 'Starting at ₹9,999',
+  'Academic & College Services': 'Pricing Decided on Confirmation'
 };
 
 export const DEFAULT_PRICE_PLACEHOLDER = 'Select a capability first';

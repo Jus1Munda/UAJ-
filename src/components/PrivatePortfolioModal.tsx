@@ -142,10 +142,10 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-lg bg-[#0b0817] border border-[#8b5cf6]/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(139,92,246,0.25)] z-10 overflow-hidden">
+      <div className="relative w-full max-w-lg bg-[#0b0817] border border-[#a855f7]/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(168,85,247,0.25)] z-10 overflow-hidden">
         {/* Ambient background glow accent */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#00f2fe]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#8b5cf6]/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#f43f5e]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#a855f7]/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
         {/* Close Button */}
         <button
@@ -158,12 +158,12 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
 
         {submitted ? (
           <div className="text-center py-6 sm:py-8 space-y-4 animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 rounded-2xl bg-[#00f2fe]/10 border border-[#00f2fe]/40 text-[#00f2fe] flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(0,242,254,0.3)]">
+            <div className="w-16 h-16 rounded-2xl bg-[#f43f5e]/10 border border-[#fb7185]/40 text-[#fb7185] flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(244,63,94,0.3)]">
               <CheckCircle2 className="w-9 h-9" />
             </div>
 
             <div>
-              <span className="text-xs font-mono text-[#00f2fe] uppercase tracking-wider block mb-1">
+              <span className="text-xs font-mono text-[#fb7185] uppercase tracking-wider block mb-1">
                 Request Recorded
               </span>
               <h3
@@ -179,15 +179,15 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
               Your request for private client case studies has been securely transmitted to the studio via Telegram. Our team reviews NDA-protected briefings promptly and will share a secure viewing link with your email shortly.
             </p>
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#140e2b] border border-[#00f2fe]/30 text-xs font-mono text-[#00f2fe]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#140e2b] border border-[#fb7185]/30 text-xs font-mono text-[#fb7185]">
               <Send className="w-3.5 h-3.5" />
-              <span>Delivered to UAJ Telegram Channel</span>
+              <span>Delivered to NuwayX Telegram Channel</span>
             </div>
 
             <div className="pt-4">
               <button
                 onClick={handleResetAndClose}
-                className="w-full py-3 rounded-lg bg-[#00f2fe] hover:bg-[#38bdf8] text-black font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-[0_0_20px_rgba(0,242,254,0.3)]"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-[#f43f5e] to-[#a855f7] hover:from-[#fb7185] hover:to-[#c084fc] text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-[0_0_20px_rgba(244,63,94,0.35)]"
                 style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
               >
                 Return to Portfolio
@@ -198,11 +198,11 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
           <div>
             {/* Header */}
             <div className="flex items-center gap-3 mb-3 pr-8">
-              <div className="w-10 h-10 rounded-xl bg-[#140e2b] border border-[#8b5cf6]/40 flex items-center justify-center text-[#00f2fe] shrink-0 shadow-[0_0_15px_rgba(0,242,254,0.2)]">
+              <div className="w-10 h-10 rounded-xl bg-[#140e2b] border border-[#a855f7]/40 flex items-center justify-center text-[#fb7185] shrink-0 shadow-[0_0_15px_rgba(244,63,94,0.25)]">
                 <Lock className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-mono tracking-widest text-[#a78bfa] uppercase font-semibold">
+                <span className="text-[10px] font-mono tracking-widest text-[#c084fc] uppercase font-semibold">
                   Confidential Showcase
                 </span>
                 <h3
@@ -230,7 +230,7 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
               {/* Name */}
               <div>
                 <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1.5">
-                  Full Name <span className="text-[#00f2fe]">*</span>
+                  Full Name <span className="text-[#fb7185]">*</span>
                 </label>
                 <input
                   type="text"
@@ -244,8 +244,8 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
                   disabled={isSubmitting}
                   placeholder="e.g. Alex Drake"
                   className={`w-full px-3.5 py-2.5 rounded-lg bg-[#140e2b]/80 border ${
-                    validationErrors.name ? 'border-red-500/70' : 'border-slate-800 focus:border-[#00f2fe]'
-                  } text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#00f2fe] transition-all`}
+                    validationErrors.name ? 'border-red-500/70' : 'border-slate-800 focus:border-[#fb7185]'
+                  } text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#fb7185] transition-all`}
                 />
                 {validationErrors.name && (
                   <p className="text-red-400 text-[11px] mt-1">{validationErrors.name}</p>
@@ -255,7 +255,7 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
               {/* Email */}
               <div>
                 <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1.5">
-                  Email Address <span className="text-[#00f2fe]">*</span>
+                  Email Address <span className="text-[#fb7185]">*</span>
                 </label>
                 <input
                   type="email"
@@ -269,8 +269,8 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
                   disabled={isSubmitting}
                   placeholder="e.g. alex@company.com"
                   className={`w-full px-3.5 py-2.5 rounded-lg bg-[#140e2b]/80 border ${
-                    validationErrors.email ? 'border-red-500/70' : 'border-slate-800 focus:border-[#00f2fe]'
-                  } text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#00f2fe] transition-all`}
+                    validationErrors.email ? 'border-red-500/70' : 'border-slate-800 focus:border-[#fb7185]'
+                  } text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#fb7185] transition-all`}
                 />
                 {validationErrors.email && (
                   <p className="text-red-400 text-[11px] mt-1">{validationErrors.email}</p>
@@ -288,14 +288,14 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                   disabled={isSubmitting}
                   placeholder="e.g. Acme Studio or Independent"
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#140e2b]/80 border border-slate-800 focus:border-[#00f2fe] text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#00f2fe] transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#140e2b]/80 border border-slate-800 focus:border-[#fb7185] text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#fb7185] transition-all"
                 />
               </div>
 
               {/* Reason for Access */}
               <div>
                 <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1.5">
-                  Reason for Requesting Access <span className="text-[#00f2fe]">*</span>
+                  Reason for Requesting Access <span className="text-[#fb7185]">*</span>
                 </label>
                 <textarea
                   rows={3}
@@ -309,8 +309,8 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
                   disabled={isSubmitting}
                   placeholder="Tell us what type of case studies or platforms you are looking to review..."
                   className={`w-full px-3.5 py-2.5 rounded-lg bg-[#140e2b]/80 border ${
-                    validationErrors.reason ? 'border-red-500/70' : 'border-slate-800 focus:border-[#00f2fe]'
-                  } text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#00f2fe] transition-all resize-none`}
+                    validationErrors.reason ? 'border-red-500/70' : 'border-slate-800 focus:border-[#fb7185]'
+                  } text-white text-sm focus:outline-none focus:ring-1 focus:ring-[#fb7185] transition-all resize-none`}
                 />
                 {validationErrors.reason && (
                   <p className="text-red-400 text-[11px] mt-1">{validationErrors.reason}</p>
@@ -331,17 +331,17 @@ export const PrivatePortfolioModal: React.FC<PrivatePortfolioModalProps> = ({ is
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-6 py-2.5 rounded-lg bg-[#00f2fe] hover:bg-[#38bdf8] disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[0_0_20px_rgba(0,242,254,0.3)]"
+                  className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#f43f5e] to-[#a855f7] hover:from-[#fb7185] hover:to-[#c084fc] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[0_0_20px_rgba(244,63,94,0.35)]"
                   style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       <span>Transmitting...</span>
                     </>
                   ) : (
                     <>
-                      <ShieldCheck className="w-4 h-4 fill-black" />
+                      <ShieldCheck className="w-4 h-4 fill-white text-white" />
                       <span>Submit Access Request</span>
                       <ArrowRight className="w-4 h-4" />
                     </>

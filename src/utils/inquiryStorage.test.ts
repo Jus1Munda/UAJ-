@@ -30,8 +30,11 @@ test('getStartingPrice returns exact mapped starting prices', () => {
   assert.equal(getStartingPrice('UI/UX Design'), 'Starting at ₹4,999');
   assert.equal(getStartingPrice('Landing Pages'), 'Starting at ₹2,999');
   assert.equal(getStartingPrice('Presentation Design'), 'Starting at ₹1,999');
+  assert.equal(getStartingPrice('Creative Design & Branding'), 'Starting at ₹8,999');
   assert.equal(getStartingPrice('Creative Digital Experiences'), 'Starting at ₹8,999');
+  assert.equal(getStartingPrice('YouTube & Creator Services'), 'Starting at ₹2,999');
   assert.equal(getStartingPrice('Custom Interactive Solutions'), 'Starting at ₹9,999');
+  assert.equal(getStartingPrice('Academic & College Services'), 'Pricing Decided on Confirmation');
   assert.equal(getStartingPrice(''), 'Select a capability first');
   assert.equal(getStartingPrice('Unknown service'), 'Select a capability first');
 });

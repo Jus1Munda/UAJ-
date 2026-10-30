@@ -19,7 +19,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = () => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b border-slate-800 pb-6">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-[#00f2fe] block mb-1.5 font-semibold">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#fb7185] block mb-1.5 font-semibold">
             Studio Portfolio
           </span>
           <h2
@@ -35,22 +35,22 @@ export const SelectedWork: React.FC<SelectedWorkProps> = () => {
       </div>
 
       {/* Blank / Coming Soon Placeholder Container */}
-      <div className="relative rounded-2xl bg-obsidian-card border border-[#8b5cf6]/30 p-10 sm:p-16 text-center overflow-hidden group shadow-[0_0_50px_rgba(139,92,246,0.1)]">
+      <div className="relative rounded-2xl bg-obsidian-card border border-[#a855f7]/30 p-10 sm:p-16 text-center overflow-hidden group shadow-[0_0_50px_rgba(168,85,247,0.1)]">
         {/* Subtle background glow */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] rounded-full pointer-events-none opacity-25"
           style={{
-            background: 'radial-gradient(ellipse at center, rgba(0, 242, 254, 0.3) 0%, rgba(139, 92, 246, 0.2) 40%, transparent 70%)',
+            background: 'radial-gradient(ellipse at center, rgba(244, 63, 94, 0.25) 0%, rgba(168, 85, 247, 0.2) 40%, transparent 70%)',
             filter: 'blur(50px)'
           }}
         />
 
         <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center">
-          <div className="w-14 h-14 rounded-2xl bg-[#140e2b] border border-[#8b5cf6]/40 flex items-center justify-center text-[#00f2fe] mb-5 shadow-[0_0_20px_rgba(0,242,254,0.2)]">
+          <div className="w-14 h-14 rounded-2xl bg-[#140e2b] border border-[#a855f7]/40 flex items-center justify-center text-[#fb7185] mb-5 shadow-[0_0_20px_rgba(244,63,94,0.25)]">
             <Clock className="w-7 h-7" />
           </div>
 
-          <span className="text-xs font-mono uppercase tracking-widest text-[#a78bfa] mb-2 font-semibold">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#c084fc] mb-2 font-semibold">
             Curating Client Case Studies
           </span>
 
@@ -69,10 +69,10 @@ export const SelectedWork: React.FC<SelectedWorkProps> = () => {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button
               onClick={() => setIsPrivateModalOpen(true)}
-              className="px-6 py-3 rounded-lg bg-[#00f2fe] hover:bg-[#38bdf8] text-black font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[0_0_20px_rgba(0,242,254,0.3)]"
+              className="px-6 py-3 rounded-lg bg-gradient-to-r from-[#f43f5e] to-[#a855f7] hover:from-[#fb7185] hover:to-[#c084fc] text-white font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[0_0_20px_rgba(244,63,94,0.35)]"
               style={{ fontFamily: 'var(--font-display, "Rajdhani", sans-serif)' }}
             >
-              <Zap className="w-4 h-4 fill-black" />
+              <Zap className="w-4 h-4 fill-white text-white" />
               <span>Request Private Portfolio</span>
               <ArrowRight className="w-4 h-4" />
             </button>
